@@ -52,10 +52,11 @@ BOOL wantReplay;
     NSString *moviePath = [[NSBundle mainBundle] pathForResource:videoPath ofType:@"mp4"];
     NSURL *movieURL = [NSURL fileURLWithPath:moviePath];
     
-    moviePlayer.view.backgroundColor = [UIColor whiteColor];
+    [self removeBackgroundVideo];
     
     // load movie
     moviePlayer                     = [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
+    moviePlayer.view.backgroundColor = [UIColor whiteColor];
     [moviePlayer prepareToPlay];
     moviePlayer.controlStyle        = MPMovieControlStyleNone;
     moviePlayer.view.frame          = frame;
@@ -74,6 +75,31 @@ BOOL wantReplay;
                                                      name: MPMoviePlayerPlaybackDidFinishNotification
                                                    object: moviePlayer];
         shouldReplay = YES;
+    }
+}
+
+-(void)removeBackgroundVideo {
+    if(moviePlayer){
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerPlaybackDidFinishNotification
+                                                      object:moviePlayer];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerDidExitFullscreenNotification
+                                                      object:moviePlayer];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerLoadStateDidChangeNotification
+                                                      object:moviePlayer];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMovieDurationAvailableNotification
+                                                      object:moviePlayer];
+        [moviePlayer pause];
+        moviePlayer.initialPlaybackTime = -1;
+        [moviePlayer stop];
+        moviePlayer.initialPlaybackTime = -1;
+        [moviePlayer.view removeFromSuperview];
     }
 }
 
