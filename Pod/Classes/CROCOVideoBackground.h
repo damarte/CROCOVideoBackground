@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, CROCOVideoBackgroundModes) {
 - (void) setBackGroundVideo:(NSString *)videoPath withRepeat:(BOOL)repeat withOverlayColor:(UIColor *)color andAlpha:(CGFloat)alpha;
 - (void) setBackGroundVideo:(NSString *)videoPath withRepeat:(BOOL)repeat withOverlayColor:(UIColor *)color andAlpha:(CGFloat)alpha andBackgroundScalingMode:(CROCOVideoBackgroundModes) backgroundMode;
 - (void) setBackGroundVideo:(NSString *)videoPath withRepeat:(BOOL)repeat withOverlayColor:(UIColor *)color andAlpha:(CGFloat)alpha andBackgroundScalingMode:(CROCOVideoBackgroundModes) backgroundMode andFrame:(CGRect)frame;
+- (void) removeBackgroundVideo;
 
 // Interaction methods if needed
 - (void)play;
